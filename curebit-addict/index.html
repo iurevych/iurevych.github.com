@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Curebit addict + referral program</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="qrcode.js"></script>
+  <style type="text/css">
+    body {
+      background-color: #fbfbfb;
+      font: 14px/1.35 Helvetica, sans-serif;
+      margin: auto;
+      padding: 20px 0;
+      width: 240px;
+    }
+    input {
+      border: 1px solid rgba(0, 0, 0, .3);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, .15);
+      box-sizing: border-box;
+      font-size: 13px;
+      margin-bottom: 10px;
+      padding: 10px 5px;
+      width: 100%;
+    }
+    #qrcode {
+      height: 240px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: normal;
+      margin: 0 0 10px;
+    }
+    h6 {
+      font-size: 12px;
+      font-weight: normal;
+    }
+    .button {
+      background: #444;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: block;
+      font-size: 18px;
+      margin: 0;
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+    }
+    .button:hover,
+    .button:focus {
+      background-color: #555;
+    }
+    .hidden {
+      display: none;
+    }
+    .progress-item {
+      border-right: 1px solid #ddd;
+      margin: 0;
+      opacity: .33;
+    }
+    .progress-item.is-filled {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="js-signup">
+    <h3>Join CoffeLand addict program and get each 6th coffee for free!</h3>
+    <input class="js-user-id" type="text" value="" placeholder="Enter your email or phone number" />
+    <button class="js-signup-button button">Get your QR code</button>
+  </div>
+  <div class="js-show-code hidden">
+    <h3>Now show it to barista to start collecting cups:</h3>
+    <div class="js-qrcode"></div>
+    <h6>Wait until your cup will be approved to see how many left to get a free coffee.</h6>
+  </div>
+  <div class="js-request-approved hidden">
+    <h3>Congrats on your 1st coffee!</h3>
+    <img src="coffee.jpg" width="100%" />
+    <h3>You need 5 more to get a free coffee at CoffeeLand:</h3>
+    <img src="coffee.jpg" width="32" class="progress-item is-filled" />
+    <img src="coffee.jpg" width="32" class="progress-item" />
+    <img src="coffee.jpg" width="32" class="progress-item" />
+    <img src="coffee.jpg" width="32" class="progress-item" />
+    <img src="coffee.jpg" width="32" class="progress-item" />
+    <img src="coffee.jpg" width="32" class="progress-item" />
+  </div>
+
+  <script type="text/javascript">
+    var qrcode = new QRCode($('.js-qrcode')[0], {
+      width: 240,
+      height: 240
+    });
+
+    function signup() {
+      qrcode.makeCode($('.js-user-id').val());
+      setTimeout(function() {
+        $(".js-show-code").slideDown(300);
+      }, 400);
+      $(".js-signup-button").slideUp(300);
+      setTimeout(function() {
+        $(".js-show-code").slideUp(300);
+        $(".js-signup").slideUp(300);
+        $(".js-request-approved").slideDown(300);
+      }, 10000);
+    }
+
+    $(".js-user-id, .js-signup-button").keydown(function(e) {
+      if (e.keyCode == 13) {
+        signup();
+      }
+    });
+
+    $(".js-signup-button").click(function() {
+      signup();
+    });
+  </script>
+</body>
