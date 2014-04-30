@@ -1,0 +1,705 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=7" />
+        <title>Ie</title>
+    </head>
+<body>
+
+<!-- Begin Curebit integration code -->
+<script>
+  //<![CDATA[
+    var _curebitq = _curebitq || [];
+    _curebitq.push(['init', {
+      site_id: 'treat' // REQUIRED - Curebit Site ID
+      // If you are using live ENV and test ENV you might need to switch over two sites based on current location host:
+      // site_id: window.location.host == "www.site.com" ? 'site' : 'site-testing'
+      // server: 'https://www.curebit.com' // OPTIONAL - use your own domain, that suppose to be setup as alias to curebit.com (this option is only possible for Enterprise client)
+    }]);
+
+    var _curebit_order_items = [];
+    _curebit_order_items.push({
+      product_id: 'sku1', /* Item Product ID */
+      price: '199.00', /* Item Unit Price */
+      quantity: '1', /* Item Quantity */
+      title: 'Awesome Product', /* Name of product */
+      url: 'http://www.store.com/product1', /* URL for product */
+      image_url: 'http://www.store.com/product1/image.jpg' /* URL for product image */
+    });
+
+    _curebit_order_items.push({
+      product_id: 'sku2', /* Item Product ID */
+      price: '6.00', /* Item Unit Price */
+      quantity: '2', /* Item Quantity */
+      title: 'Amazing Product', /* Name of product */
+      url: 'http://www.store.com/product2', /* URL for product */
+      image_url: 'http://www.store.com/product2/image.jpg' /* URL for product image */
+    });
+
+    var _curebit_order_details = {
+      order_number: '100011', // REQUIRED - Order number
+      order_date: '2014-04-15T08:18:44+00:00', // REQUIRED - Order Date and Time (ISO 8601 formatted datetime)
+      email: 'customer@example.com', // REQUIRED - Customer Email Address
+      subtotal: '23.97', // REQUIRED - Purchase Subtotal
+      coupon_code: 'SAVE20', // REQUIRED - Coupon code used at checkout, multiple coupons allowed as JS array: ['SAVE20', 'FREE-SHIPPING']. Pass null if there is no coupon code.
+      customer_id: '1234567890', // OPTIONAL - Set to your internal customer ID for tracking
+      custom_field: null, // OPTIONAL - Any custom order data you might need
+      items: _curebit_order_items,
+      dont_redeem: false,  // OPTIONAL - Tell Curebit that this purchase should not be redeemed
+      first_name: 'Name',  // OPTIONAL - Customer First Name
+      last_name: 'Surname',  // OPTIONAL - Customer Last Name
+      // iframe: { // OPTIONAL - display offer inline instead of popup
+      //   // container: "id-example", // Tell Curebit where to insert the iframe (ID attribute). See Asynchronous Integration for more details.
+      //   width: '100%', // These are standard HTML attributes, feel free to add as many you need
+      //   height: '400'
+      // },
+      // loader: 'background: rgba(0, 0, 0, .85) url("//d2jjzw81hqbuqv.cloudfront.net/assets/api/loader.gif") no-repeat center center;', // OPTIONAL - change CSS of loading overlay or disable it completely by using 'display: none;'
+      responsive: true, // OPTIONAL - fit iframe into viewport (also on resize) and allow Curebit display mobile templates
+      // device: 'desktop', // OPTIONAL - enforce mobile/tablet/desktop view or skip this to allow Curebit choose corresponding template
+      campaign_tags: ['default'] // OPTIONAL - Campaign tags used to target specific campaign for offer
+    };
+
+    _curebitq.push(['register_purchase', _curebit_order_details]);
+  //]]>
+</script>
+<!-- End Curebit integration code -->
+
+<script>
+    var NO_JQUERY = {};
+    (function(window, $, undefined) {
+    
+         if (!("console" in window)) {
+             var c = window.console = {};
+             c.log = c.warn = c.error = c.debug = function(){};
+         }
+    
+         if ($ === NO_JQUERY) {
+             // jQuery is optional
+             $ = {
+                 fn: {},
+                 extend: function() {
+                     var a = arguments[0];
+                     for (var i=1,len=arguments.length; i<len; i++) {
+                         var b = arguments[i];
+                         for (var prop in b) {
+                             a[prop] = b[prop];
+                         }
+                     }
+                     return a;
+                 }
+             };
+         }
+    
+         $.fn.pm = function() {
+             console.log("usage: \nto send:    $.pm(options)\nto receive: $.pm.bind(type, fn, [origin])");
+             return this;
+         };
+    
+         // send postmessage
+         $.pm = window.pm = function(options) {
+             pm.send(options);
+         };
+    
+         // bind postmessage handler
+         $.pm.bind = window.pm.bind = function(type, fn, origin, hash, async_reply) {
+             pm.bind(type, fn, origin, hash, async_reply === true);
+         };
+    
+         // unbind postmessage handler
+         $.pm.unbind = window.pm.unbind = function(type, fn) {
+             pm.unbind(type, fn);
+         };
+    
+         // default postmessage origin on bind
+         $.pm.origin = window.pm.origin = null;
+    
+         // default postmessage polling if using location hash to pass postmessages
+         $.pm.poll = window.pm.poll = 200;
+    
+         var pm = {
+    
+             send: function(options) {
+                 var o = $.extend({}, pm.defaults, options),
+                 target = o.target;
+                 if (!o.target) {
+                     console.warn("postmessage target window required");
+                     return;
+                 }
+                 if (!o.type) {
+                     console.warn("postmessage type required");
+                     return;
+                 }
+                 var msg = {data:o.data, type:o.type};
+                 if (o.success) {
+                     msg.callback = pm._callback(o.success);
+                 }
+                 if (o.error) {
+                     msg.errback = pm._callback(o.error);
+                 }
+                 if (("postMessage" in target) && !o.hash) {
+                     pm._bind();
+                     target.postMessage(JSON.stringify(msg), o.origin || '*');
+                 }
+                 else {
+                     pm.hash._bind();
+                     pm.hash.send(o, msg);
+                 }
+             },
+    
+             bind: function(type, fn, origin, hash, async_reply) {
+               pm._replyBind ( type, fn, origin, hash, async_reply );
+             },
+    
+             _replyBind: function(type, fn, origin, hash, isCallback) {
+               if (("postMessage" in window) && !hash) {
+                   pm._bind();
+               }
+               else {
+                   pm.hash._bind();
+               }
+               var l = pm.data("listeners.postmessage");
+               if (!l) {
+                   l = {};
+                   pm.data("listeners.postmessage", l);
+               }
+               var fns = l[type];
+               if (!fns) {
+                   fns = [];
+                   l[type] = fns;
+               }
+               fns.push({fn:fn, callback: isCallback, origin:origin || $.pm.origin});
+             },
+    
+             unbind: function(type, fn) {
+                 var l = pm.data("listeners.postmessage");
+                 if (l) {
+                     if (type) {
+                         if (fn) {
+                             // remove specific listener
+                             var fns = l[type];
+                             if (fns) {
+                                 var m = [];
+                                 for (var i=0,len=fns.length; i<len; i++) {
+                                     var o = fns[i];
+                                     if (o.fn !== fn) {
+                                         m.push(o);
+                                     }
+                                 }
+                                 l[type] = m;
+                             }
+                         }
+                         else {
+                             // remove all listeners by type
+                             delete l[type];
+                         }
+                     }
+                     else {
+                         // unbind all listeners of all type
+                         for (var i in l) {
+                           delete l[i];
+                         }
+                     }
+                 }
+             },
+    
+             data: function(k, v) {
+                 if (v === undefined) {
+                     return pm._data[k];
+                 }
+                 pm._data[k] = v;
+                 return v;
+             },
+    
+             _data: {},
+    
+             _CHARS: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split(''),
+    
+             _random: function() {
+                 var r = [];
+                 for (var i=0; i<32; i++) {
+                     r[i] = pm._CHARS[0 | Math.random() * 32];
+                 };
+                 return r.join("");
+             },
+    
+             _callback: function(fn) {
+                 var cbs = pm.data("callbacks.postmessage");
+                 if (!cbs) {
+                     cbs = {};
+                     pm.data("callbacks.postmessage", cbs);
+                 }
+                 var r = pm._random();
+                 cbs[r] = fn;
+                 return r;
+             },
+    
+             _bind: function() {
+                 // are we already listening to message events on this w?
+                 if (!pm.data("listening.postmessage")) {
+                     if (window.addEventListener) {
+                         window.addEventListener("message", pm._dispatch, false);
+                     }
+                     else if (window.attachEvent) {
+                         window.attachEvent("onmessage", pm._dispatch);
+                     }
+                     pm.data("listening.postmessage", 1);
+                 }
+             },
+    
+             _dispatch: function(e) {
+                 //console.log("$.pm.dispatch", e, this);
+                 try {
+                     var msg = JSON.parse(e.data);
+                 }
+                 catch (ex) {
+                     console.warn("postmessage data invalid json: ", ex);
+                     return;
+                 }
+                 if (!msg.type) {
+                     console.warn("postmessage message type required");
+                     return;
+                 }
+                 var cbs = pm.data("callbacks.postmessage") || {},
+                 cb = cbs[msg.type];
+                 if (cb) {
+                     cb(msg.data);
+                 }
+                 else {
+                     var l = pm.data("listeners.postmessage") || {};
+                     var fns = l[msg.type] || [];
+                     for (var i=0,len=fns.length; i<len; i++) {
+                         var o = fns[i];
+                         if (o.origin && o.origin !== '*' && e.origin !== o.origin) {
+                             console.warn("postmessage message origin mismatch", e.origin, o.origin);
+                             if (msg.errback) {
+                                 // notify post message errback
+                                 var error = {
+                                     message: "postmessage origin mismatch",
+                                     origin: [e.origin, o.origin]
+                                 };
+                                 pm.send({target:e.source, data:error, type:msg.errback});
+                             }
+                             continue;
+                         }
+    
+                         function sendReply ( data ) {
+                           if (msg.callback) {
+                               pm.send({target:e.source, data:data, type:msg.callback});
+                           }
+                         }
+    
+                         try {
+                             if ( o.callback ) {
+                               o.fn(msg.data, sendReply, e);
+                             } else {
+                               sendReply ( o.fn(msg.data, e) );
+                             }
+                         }
+                         catch (ex) {
+                             if (msg.errback) {
+                                 // notify post message errback
+                                 pm.send({target:e.source, data:ex, type:msg.errback});
+                             } else {
+                                 throw ex;
+                             }
+                         }
+                     };
+                 }
+             }
+         };
+    
+         $.extend(pm, {
+              defaults: {
+                  target: null,  /* target window (required) */
+                  url: null,     /* target window url (required if no window.postMessage or hash == true) */
+                  type: null,    /* message type (required) */
+                  data: null,    /* message data (required) */
+                  success: null, /* success callback (optional) */
+                  error: null,   /* error callback (optional) */
+                  origin: "*",   /* postmessage origin (optional) */
+                  hash: false    /* use location hash for message passing (optional) */
+              }
+          });
+    
+    })(this, typeof jQuery === "undefined" ? NO_JQUERY : jQuery);
+    
+    var curebit = function() {
+      var config = {
+        testing: false,
+        debug: false,
+        site_id: '',
+        server: 'https://www.curebit.com',
+        version: '1.0.2',
+        queue_check_interval: 200,
+        async: false,
+        url_length_limit: 2000, // http://stackoverflow.com/questions/417142/what-is-the-maximum-length-of-a-url
+        current_location: window.location.href
+      };
+    
+      var utils = {
+        log: function(message, source) {
+          if (typeof console != "undefined" && config.debug) {
+            source = source || 'all-' + config.version;
+            console.log(source + ' >> ' + message);
+          }
+        },
+    
+        serialize: function(object, prefix) {
+          var i, key;
+          if (!object) {
+            return "";
+          }
+          if (!prefix && !this.isObject(object)) {
+            throw new Error("Url parameters should be a javascript hash");
+          }
+          var s = [];
+          if (this.isArray(object)) {
+            for (i = 0, object.length; i < object.length; ++i) {
+              s.push(this.serialize(object[i], prefix + "[]"));
+            }
+          } else if (this.isObject(object)) {
+            for (key in object) {
+              if (!this.hasProperty(object, key)) continue;
+              var prop = object[key];
+              if (!(prop != null)) {
+                continue;
+              }
+              if (prefix != null) {
+                key = "" + prefix + "[" + key + "]";
+              }
+              var fragment = this.serialize(prop, key);
+              if (fragment) {
+                s.push(this.serialize(prop, key));
+              }
+            }
+          } else {
+            if (object) {
+              s.push("" + (encodeURIComponent(prefix.toString())) + "=" + (encodeURIComponent(object.toString())));
+            }
+          }
+          return s.length ? s.join("&") : "";
+        },
+    
+        isBrowserSupported: function() {
+          return true;
+        },
+    
+        documentWrite: function(str) {
+          document.write(str);
+        },
+    
+        documentAppend: function(node) {
+          document.body.appendChild(node);
+        },
+    
+        escapeHtml: function(str) {
+          var div = document.createElement('div');
+          div.appendChild(document.createTextNode(str));
+          return div.innerHTML;
+        },
+    
+        unescapeHtml: function(escapedStr) {
+          var div = document.createElement('div');
+          div.innerHTML = escapedStr;
+          var child = div.childNodes[0];
+          return child ? child.nodeValue : '';
+        },
+    
+        isObject: function(object) {
+          return this.getObjectType(object) == "[object Object]";
+        },
+    
+        isArray: function(object) {
+          return this.getObjectType(object) == "[object Array]";
+        },
+    
+        getObjectType: function(object) {
+          return Object.prototype.toString.call(object);
+        },
+    
+        hasProperty: function(options, key) {
+          return options.hasOwnProperty(key);
+        },
+    
+        setAttributes: function(element, attrs) {
+          for (var key in attrs) {
+            element.setAttribute(key, attrs[key]);
+          }
+        },
+    
+        location_parameters: function() {
+          var vars = {};
+          var hashes = config.current_location.slice(config.current_location.indexOf('?') + 1).split('&');
+          for(var i = 0; i < hashes.length; i++)
+          {
+            var hash = hashes[i].split('=');
+            vars[hash[0]] = decodeURIComponent(hash[1]);
+          }
+          return vars;
+        },
+    
+        location_parameter: function(name) {
+          return this.location_parameters()[name];
+        },
+    
+        ensureInitialized: function() {
+          if (!window.curebit.initialized) {
+            throw new Error("You need to call 'init' first")
+          }
+        },
+    
+        namespace: function() {
+          return config.server + '/public/' + encodeURIComponent(config.site_id);
+        },
+    
+        addImage: function(url) {
+          utils.log('addImage: ' + url);
+    
+          if (document.images) {
+            (new Image()).src=url;
+          }
+        },
+    
+        insertIframeIntoContainer: function(iframe, container) {
+          var containerEl = document.getElementById(container.replace("#", ""));
+          if (containerEl) containerEl.appendChild(iframe);
+        },
+    
+        addIframe: function(url, options, responsive) {
+          utils.log('addIframe: ' + url);
+    
+          var attrs = {};
+          options = options || {};
+          options.frameBorder = "0";
+          options.src = url;
+          if (!options.id) options.id = "curebit_integration";
+    
+          for (key in options) {
+            if (key !== "container") attrs[key] = this.escapeHtml(options[key]);
+          }
+    
+          if (options.container) {
+            var iframe = document.createElement("iframe");
+            this.setAttributes(iframe, attrs);
+            this.insertIframeIntoContainer(iframe, options.container);
+          } else {
+            this.documentWrite('<iframe frameBorder="0" id="' + options.id + '"></iframe>');
+            var iframe = document.getElementById(options.id);
+            this.setAttributes(iframe, attrs);
+          }
+    
+          if (responsive) {
+            pm.bind("curebit_offer_iframe_broadcast", function(data) {
+              // Set both to do not depend on browser or configuration
+              iframe.height = data.height;
+              iframe.style.height = data.height + "px";
+            });
+          }
+        },
+    
+        addOverlayIframe: function(url, options) {
+          utils.log('addOverlayIframe: ' + url);
+    
+          var iframe = document.createElement("iframe");
+          var preloader = document.createElement("div");
+          var styles = "display: block; height: 100%; left: 0; position: absolute; position: fixed; top: 0; width: 100%; z-index: 99999;";
+          var loader = options.loader || "background: rgba(0, 0, 0, .85) url('//d2jjzw81hqbuqv.cloudfront.net/assets/api/loader.gif') no-repeat center center;";
+          delete options.loader;
+    
+          options = options || {};
+          if (!options.id) options.id = "curebit_integration";
+          options.src = url;
+          options.frameBorder = "0";
+          options.style = "position: absolute; height: 1px; width: 1px; overflow: hidden; bottom: 0; z-index -1; opacity: 0;";
+    
+          for (key in options) {
+            if (!this.hasProperty(options, key)) continue;
+            iframe.setAttribute(key, options[key]);
+          }
+    
+          preloader.setAttribute("style", styles + loader);
+          this.documentAppend(iframe);
+          this.documentAppend(preloader);
+    
+          pm.bind("curebit_offer_loaded", function(data) {
+            setTimeout(function() {
+              if (preloader) {
+                preloader.parentNode.removeChild(preloader);
+                preloader = null;
+              }
+            }, 200);
+            iframe.setAttribute("style", styles);
+          });
+    
+          pm.bind("curebit_offer_close", function(data) {
+            if (preloader) {
+              preloader.parentNode.removeChild(preloader);
+              preloader = null;
+            }
+            iframe.parentNode.removeChild(iframe);
+          });
+        },
+    
+        buildJs: function(url) {
+          var result = document.createElement('script');
+          result.type = 'text/javascript';
+          result.async = config.async;
+          result.src = url;
+          return result;
+        },
+    
+        addJs: function(url) {
+          utils.log('addJs: ' + url);
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(utils.buildJs(url), s);
+        }
+      };
+    
+      var methods = {
+        init: function(options) {
+          for (var key in options) {
+            if (!utils.hasProperty(options, key)) continue;
+            config[key] = options[key];
+          }
+          if (!config.site_id) {
+            throw new Error('site_id must be specified!');
+          }
+          this.initialized = true;
+        },
+    
+        register_affiliate: function(data) {
+          utils.ensureInitialized();
+          var affiliate_member = data.affiliate_member || {};
+          var url_parameters = ['email', 'first_name', 'last_name', 'traffic_source'];
+          for(var i = 0; i < url_parameters.length; i++) {
+            var parameter = url_parameters[i];
+            if (utils.location_parameter(parameter)) {
+              affiliate_member[parameter] = utils.location_parameter(parameter);
+            }
+          }
+          var parameters = {
+            affiliate_member: affiliate_member,
+            campaign_tags: utils.location_parameter('campaign_tags') || data.campaign_tags,
+            responsive: data.responsive,
+            device: typeof data.device == 'undefined' ? null : data.device.toString()
+          }
+          var action = parameters.affiliate_member && parameters.affiliate_member.email ? 'create' : 'new'
+          var create_url = utils.namespace() + '/affiliate_members/' + action + '?' + utils.serialize(parameters)
+          utils.addIframe(create_url, data.iframe, data.responsive);
+        },
+    
+        new_affiliate: function(data) {
+          return methods.register_affiliate(data);
+        },
+    
+        register_products: function(products) {
+          utils.ensureInitialized();
+          for(var i = 0; i < products.length; i++) {
+            var create_url = utils.namespace() + '/products/create.gif?' +
+              utils.serialize(products[i], "p");
+            utils.addImage(create_url)
+          }
+        },
+    
+        register_purchase: function(orderDetails) {
+          utils.ensureInitialized();
+          if (orderDetails.customer_email) {
+            orderDetails.email = orderDetails.customer_email;
+            delete orderDetails.customer_email;
+          }
+          var visitor_uuid = orderDetails.visitor_uuid;
+          var campaign_tags = utils.location_parameter('campaign_tags') || orderDetails.campaign_tags;
+          var items = orderDetails.items;
+          var iframe = orderDetails.iframe;
+          var loader = orderDetails.loader;
+          var responsive = orderDetails.responsive;
+          var device = orderDetails.device;
+          delete orderDetails.visitor_uuid;
+          delete orderDetails.items;
+          delete orderDetails.campaign_tags;
+          delete orderDetails.iframe;
+          delete orderDetails.loader;
+          delete orderDetails.responsive;
+          delete orderDetails.device;
+          var parameters = {
+            v: config.version,
+            p: orderDetails,
+            responsive: responsive,
+            device: typeof device == 'undefined' ? null : device.toString(),
+            visitor_uuid: visitor_uuid,
+            campaign_tags: campaign_tags,
+            inline: !!iframe
+          }
+    
+          var extension = utils.isBrowserSupported() ? 'html' : 'gif';
+          var create_url =
+            utils.namespace() + '/purchases/create.' + extension + '?' + utils.serialize(parameters);
+    
+          if (items) {
+            for(var i = 0; i < items.length; i++) {
+              var item = items[i]
+              var itemsParams = "&" + utils.serialize(
+                { product_id: item.product_id, price: item.price, quantity: item.quantity },
+                "p[i]["+i+"]"
+              )
+              if ((create_url + itemsParams).length < config.url_length_limit) {
+                create_url += itemsParams;
+              }
+              // Also register the products if the vars are specified
+              if (items[i].url) {
+                methods.register_products([{
+                  product_id: items[i].product_id,
+                  url: items[i].url,
+                  image_url: items[i].image_url,
+                  title: items[i].title,
+                  price: items[i].price
+                }]);
+              }
+            }
+          }
+    
+          switch (extension) {
+          case 'html':
+            // Inline VS Fullscreen
+            if (iframe) {
+              utils.addIframe(create_url, iframe, responsive);
+            } else {
+              utils.addOverlayIframe(create_url, { loader: loader });
+            }
+            break;
+          case 'gif':
+            utils.addImage(create_url);
+            break;
+          }
+        }
+      };
+    
+      return {
+        initialized: false,
+        config: config,
+        utils: utils,
+        methods: methods,
+    
+        check: function() {
+          if (typeof _curebitq != 'undefined') {
+            var delayed_call_args;
+            while(delayed_call_args = _curebitq.shift()) {
+              var method = delayed_call_args.shift();
+              curebit.methods[method].apply(curebit, delayed_call_args);
+            }
+          }
+        },
+    
+        run: function() {
+          curebit.check();
+          setInterval(function() {
+            curebit.check();
+          }, config.queue_check_interval);
+        }
+      };
+    }();
+    
+    curebit.run();
+</script>
+</body>
+</html>
