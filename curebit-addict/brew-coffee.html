@@ -13,19 +13,34 @@
   </style>
 </head>
 <body>
-  _talkableq = [];
-  _talkableq.push(['init', { site_id: 'marina-testing' }]);
+  <script>
+    var getUrlParameter = function getUrlParameter(sParam) {
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+  
+      for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
 
-  var eventData = {
-    event_number: Math.floor(Math.random(1) * 100000000),
-    email: "{{ advocate_info.email }}",
-    event_category: 'coffee',
-    campaign_tags: ['404404'],
-    first_name: '{{ advocate_info.first_name }}',
-    last_name: '{{ advocate_info.first_name }}'
-  };
-
-  $.getScript("//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-1.0.min.js", function() {
-    // _talkableq.push(['register_event', eventData]);
-  });
+        if (sParameterName[0] === sParam) {
+          return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+      }
+    };
+    
+    _talkableq = [];
+    _talkableq.push(['init', { site_id: 'marina-testing' }]);
+  
+    var eventData = {
+      event_number: Math.floor(Math.random(1) * 100000000),
+      email: getUrlParameter('email'),
+      event_category: 'coffee',
+      campaign_tags: ['404']
+    };
+  
+    $.getScript("//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-1.0.min.js", function() {
+      // _talkableq.push(['register_event', eventData]);
+    });
+  </script>
 </body>
