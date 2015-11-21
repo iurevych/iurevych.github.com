@@ -13,6 +13,8 @@
   </style>
 </head>
 <body>
+  <div id="pp-container"></div>
+  
   <script>
     var getUrlParameter = function getUrlParameter(sParam) {
       var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -39,6 +41,7 @@
       campaign_tags: ['404'],
       iframe: {
         name: 'pp',
+        container: 'pp-container',
         style: 'display: block; position: fixed; bottom: 0; right: 0; top: 0; left: 0; background: rgba(0, 0, 0, .85) url("//d2jjzw81hqbuqv.cloudfront.net/assets/api/loader.gif") no-repeat center center;'
       }
     };
