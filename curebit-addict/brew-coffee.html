@@ -49,7 +49,7 @@
     $.getScript("//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-1.0.min.js", function() {
       _talkableq.push(['register_event', eventData]);
       talkable.subscribe('offer_close', 'pp', function() {
-        window.location = "https://www.talkable.com/x/eVg38d";
+        window.location = getUrlParameter("redirect");
       });
     });
   </script>
