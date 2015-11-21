@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Brewing...</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="sa-container"></div>
+  
+  <script>
+    _talkableq = [];
+    _talkableq.push(['init', { site_id: 'marina-testing' }]);
+  
+    $.getScript("//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-1.0.min.js", function() {
+      _talkableq.push(['register_affiliate', {affiliate_member: { campaign_tags: ['addict'] }}]);
+    });
+  </script>
+</body>
