@@ -36,11 +36,18 @@
       event_number: Math.floor(Math.random(1) * 100000000),
       email: getUrlParameter('email'),
       event_category: 'coffee',
-      campaign_tags: ['404']
+      campaign_tags: ['404'],
+      iframe: {
+        name: 'pp',
+        style: 'position: fixed; bottom: 0; right: 0; top: 0; left: 0; background: rgba(0, 0, 0, .85) url("//d2jjzw81hqbuqv.cloudfront.net/assets/api/loader.gif") no-repeat center center;'
+      }
     };
   
     $.getScript("//d2jjzw81hqbuqv.cloudfront.net/integration/talkable-1.0.min.js", function() {
-      // _talkableq.push(['register_event', eventData]);
+      _talkableq.push(['register_event', eventData]);
+      talkable.subscribe('offer_loaded', 'pp', function() {
+        window.location = "https://www.talkable.com/x/eVg38d";
+      });
     });
   </script>
 </body>
