@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta content='initial-scale=1, maximum-scale=1' name='viewport' />
+    <script>
+      window.talkablePlacementsConfig = {
+        placements: [],
+        timestamp: Date.now(),
+        integration_id: '4.0'
+      }
+
+      window._talkableq = [
+        ['init', { site_id: 'bart', server: 'https://bart.talkable.com' }],
+        ['register_affiliate', { campaign_tags: ['safari-demo'] }]
+      ]
+    </script>
+    <script src='https://d2jjzw81hqbuqv.cloudfront.net/integration/talkable-4.0.js'></script>
+  </head>
+  <body>
+    <pre>
+      Just a foolish attempt to fix Safari 3rd-party cookies issue. The issue arises when
+      an Advocate who never visited talkable.com domain sees Talkable campaign integrated on
+      a customer's website (example.com). Safari (when certain security policy is set,
+      btw it is set by default like that) will Talkable's attempt to set cookies on
+      https://talkable.com domain, even though a cookie is set from within of an iframe.
+      
+      As a fix we will:
+      1. Pass "current visitor UUID" right from our integration library as an iframe
+         URL param. The UUID will be stored in cookies on customer's website (example.com).
+         Presumably we won't have any troubles setting this cookie since the integration
+         lib is a part of a customer's page.
+
+         1.1 If a Friend is coming from Talkable with "visitor_uuid" URL param we will need
+             to take that UUID rather than the one which was already set in cookies. It
+             then allows the Friend to see the Gleam campaign, rather than seeing a
+             Trigger Widget.
+    
+         1.2 In a scenario where AD saw the FW campaign with the UUID params passed in
+             through URL params and then saw FR Claim Page where a cookie was successfully
+             set to talkable.com domain we will need to resolve the conflict of cookies
+             because now there are two different cookies set: on example.com and
+             on talakble.com. Ideally we want to take the new UUID which was set on the FR
+             Claim Page.
+
+      2. Detect that the UUID is not set inside cookies on talkable.com domain (inside iframe)
+         and trigger the integration library method to set the cookie there, on a customer's
+         website, and then pass it through URL params (see #1).
+    </pre>
+  </body>
+</html>
