@@ -4,7 +4,12 @@
     <title></title>
     <meta content='initial-scale=1, maximum-scale=1' name='viewport' />
     <script>
-      window.talkablePlacementsConfig = {}
+      window.talkablePlacementsConfig = {
+        placements: [],
+        timestamp: Date.now(),
+        integration_id: '4.0'
+      }
+
       window._talkableq = [
         ['init', { site_id: 'bart', server: 'https://bart.talkable.com' }],
         ['register_affiliate', { campaign_tags: ['safari-demo'] }]
