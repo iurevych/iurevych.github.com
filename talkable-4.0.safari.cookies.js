@@ -680,10 +680,15 @@ var talkable = window.curebit = window.talkable = function() {
         styleTag = null;
       });
 
+      utils.subscribe('reload_offer', iframe.name, function(data) {
+        if (data.should_delete_uuid) utils.deleteUUID();
+        iframe.src = iframe.src.replace(/current_visitor_uuid=[^&]+&?/, '');
+      });
+
       utils.subscribe('offer_loaded', iframe.name, function(data) {
         utils.lastLoadedIframeName.push(iframe.name);
 
-        if (data.current_visitor_uuid && !utils.getUUID()) utils.setUUID(data.current_visitor_uuid);
+        if (data.current_visitor_uuid) utils.setUUID(data.current_visitor_uuid);
         if (data.perform_snapshot) utils.scrapeDOM();
 
         if (utils.gleamRewardCallback && data.gleam_reward) {
@@ -790,9 +795,6 @@ var talkable = window.curebit = window.talkable = function() {
           iframe_options = utils.merge(utils.defaultIframeOptions(), options.trigger_widget);
           triggered_iframe_options = utils.merge(triggered_iframe_options, options.iframe);
         }
-
-        // if (utils.getUUID()) 
-        console.log('options.url >>>>>>>', options.url)
 
         var iframe = utils.addIframeElement(options.url, iframe_options);
 
@@ -1021,12 +1023,20 @@ var talkable = window.curebit = window.talkable = function() {
       document.cookie = name + '=' + value + '; expires=' + date.toGMTString() + '; path=/';
     },
 
+    deleteCookie: function(name) {
+      document.cookie = name +'=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    },
+
     getUUID: function() {
       return this.getCookie('uuid');
     },
 
     setUUID: function(current_visitor_uuid) {
       this.setCookie('uuid', current_visitor_uuid);
+    },
+
+    deleteUUID: function() {
+      this.deleteCookie('uuid');
     }
   };
 
