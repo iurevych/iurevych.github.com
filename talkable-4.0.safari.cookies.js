@@ -680,15 +680,10 @@ var talkable = window.curebit = window.talkable = function() {
         styleTag = null;
       });
 
-      utils.subscribe('reload_offer', iframe.name, function(data) {
-        if (data.should_delete_uuid) utils.deleteUUID();
-        iframe.src = iframe.src.replace(/current_visitor_uuid=[^&]+&?/, '');
-      });
-
       utils.subscribe('offer_loaded', iframe.name, function(data) {
         utils.lastLoadedIframeName.push(iframe.name);
+        data.current_visitor_uuid ? utils.setUUID(data.current_visitor_uuid) : utils.deleteUUID();
 
-        if (data.current_visitor_uuid) utils.setUUID(data.current_visitor_uuid);
         if (data.perform_snapshot) utils.scrapeDOM();
 
         if (utils.gleamRewardCallback && data.gleam_reward) {
@@ -773,7 +768,7 @@ var talkable = window.curebit = window.talkable = function() {
 
         if (internal_ip && url_parameters.o) url_parameters.o.internal_ip_address = internal_ip;
         if (url_parameters.o && url_parameters.o.email) url_parameters.o.email = Base64.encode(url_parameters.o.email);
-        if (utils.getUUID()) url_parameters.current_visitor_uuid = utils.getUUID();
+        if (utils.getUUID()) url_parameters.cvuuid = utils.getUUID();
 
         var create_url = utils.createUrl(url_path, url_parameters);
 
