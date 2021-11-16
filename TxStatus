@@ -1,1 +1,72 @@
-<mxfile host="app.diagrams.net" modified="2021-11-16T10:47:30.226Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" version="15.7.4" etag="mtIZDSKZhA3C73pDG35a" type="github"><diagram id="Thia7Ou7H-pUbu1R8aYr">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-11-16T11:13:33.076Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="Z_0h2ftBmfwJdpUxX6lv" version="15.7.4" type="github">
+  <diagram id="Thia7Ou7H-pUbu1R8aYr" name="Page-1">
+    <mxGraphModel dx="946" dy="625" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-1" target="4zAcPx6BSeDNNsQtcae5-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-1" value="User submits a request to mint a domain" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="382" y="70" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-2" target="4zAcPx6BSeDNNsQtcae5-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-2" value="Transition Tx status to &quot;Uninitialized&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="382" y="320" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="622" y="215.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-7" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="4zAcPx6BSeDNNsQtcae5-6">
+          <mxGeometry x="0.0526" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-3" target="4zAcPx6BSeDNNsQtcae5-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-12" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="4zAcPx6BSeDNNsQtcae5-11">
+          <mxGeometry x="-0.0204" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-3" value="BestowDomain Tx is unique&lt;br&gt;for this domain" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="160" width="224" height="111" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-13" target="4zAcPx6BSeDNNsQtcae5-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-13" value="Transition Tx status to &quot;In Pool&quot; once the Tx is submitted to the blockchain" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="382" y="410" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-15" target="4zAcPx6BSeDNNsQtcae5-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-15" value="Transition Tx status to &quot;Mined&quot; once the block is mined on the blockchain&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="382" y="500" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-17" target="4zAcPx6BSeDNNsQtcae5-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-24" value="Retry duplicate txs" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="4zAcPx6BSeDNNsQtcae5-23">
+          <mxGeometry x="-0.7723" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-17" value="Transition Tx status to &quot;Mirrored&quot; once the tx is confirmed and no longer has a chance to change status" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="382" y="590" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-21" value="Transition Tx status to &quot;Rejected&quot;" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="150" y="410" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-22" value="Transition Tx status to &quot;Blocked&quot; and wait on retry" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="622" y="185.5" width="160" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
