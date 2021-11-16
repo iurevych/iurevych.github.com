@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-11-16T11:13:33.076Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="Z_0h2ftBmfwJdpUxX6lv" version="15.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2021-11-16T11:22:29.089Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="XEoXKv4NQnWaxLfVk3OK" version="15.7.4" type="github">
   <diagram id="Thia7Ou7H-pUbu1R8aYr" name="Page-1">
     <mxGraphModel dx="946" dy="625" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -38,6 +38,9 @@
           <mxGeometry x="350" y="160" width="224" height="111" as="geometry" />
         </mxCell>
         <mxCell id="4zAcPx6BSeDNNsQtcae5-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-13" target="4zAcPx6BSeDNNsQtcae5-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4zAcPx6BSeDNNsQtcae5-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4zAcPx6BSeDNNsQtcae5-13" target="4zAcPx6BSeDNNsQtcae5-21">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="4zAcPx6BSeDNNsQtcae5-13" value="Transition Tx status to &quot;In Pool&quot; once the Tx is submitted to the blockchain" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
