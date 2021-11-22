@@ -1,1 +1,84 @@
-<mxfile host="app.diagrams.net" modified="2021-11-22T15:14:40.647Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" version="15.7.4" etag="le5a4XyzAFuAiU_enirF" type="github"><diagram id="yqF9OPGDJT8G1XgkWbwY">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-11-22T16:09:23.507Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36" etag="L5GPLiI6WBzr1ca3F85S" version="15.7.4" type="github">
+  <diagram id="yqF9OPGDJT8G1XgkWbwY" name="Page-1">
+    <mxGraphModel dx="946" dy="625" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-1" target="TEYt2MhsZPRsqRE9AWoP-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-1" value="Withdraw from L2" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-3" value="Burn on MATIC, Mint on ETH" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="130" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-6" target="TEYt2MhsZPRsqRE9AWoP-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-6" value="ZNS domain on L1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-8" target="TEYt2MhsZPRsqRE9AWoP-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-8" target="TEYt2MhsZPRsqRE9AWoP-23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="480" />
+              <mxPoint x="480" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-8" value="CNS domain on L1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-9" target="TEYt2MhsZPRsqRE9AWoP-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-9" value="UNS domain on L1" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-10" target="TEYt2MhsZPRsqRE9AWoP-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="370" />
+              <mxPoint x="140" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-10" target="TEYt2MhsZPRsqRE9AWoP-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="380" />
+              <mxPoint x="340" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="TEYt2MhsZPRsqRE9AWoP-10" target="TEYt2MhsZPRsqRE9AWoP-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="370" />
+              <mxPoint x="660" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-10" value="Deposit to L2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="440" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-17" value="Burn ZNS domain on ZIL, Mint on UNS MATIC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-22" value="Upgrade to UNS L1 on ETH" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-23" value="Upgrade to UNS L2 on MATIC&lt;br&gt;[preferred option but costs x2]" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TEYt2MhsZPRsqRE9AWoP-26" value="Deposit to MATIC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
